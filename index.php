@@ -1,3 +1,9 @@
+<?php
+
+include "calendar.php";
+
+?>
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
@@ -65,6 +71,12 @@
                 <label for="endDate">End Date:</label>
                 <input type="date" name="end_date" id="endDate" required>
 
+                <label for="startTime">Start Time:</label>
+                <input type="time" name="start_time" id="startTime" required>
+
+                <label for="endTime">End Time:</label>
+                <input type="time" name="end_time" id="endTime" required>
+
                 <button type="submit" class="submit-btn">Save Event</button>
             </form>
 
@@ -79,6 +91,9 @@
             <button type="button" class="submit-btn" onclick="closeModal()">Cancel</button>
         </div>
     </div>
+    <script>
+        const events = <?php echo json_encode($eventsFromDB, JSON_UNESCAPED_UNICODE); ?>;
+    </script>
     <script src="calendar.js"></script>
 </body>
 

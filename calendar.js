@@ -112,7 +112,7 @@ function renderCalendar(date = new Date()) {
 
 // Add event modal
 function openModalForAdd(dateStr) {
-  document.getElementById("fromAction").value = "add";
+  document.getElementById("formAction").value = "add";
     document.getElementById("eventId").value = "";
     document.getElementById("deleteEventId").value = "";
     document.getElementById("courseName").value = "";
@@ -135,7 +135,7 @@ function openModalForAdd(dateStr) {
 
 // Edit event modal
 function openModalForEdit(eventsOnDate) {
-  document.getElementById("fromAction").value = "edit";
+  document.getElementById("formAction").value = "edit";
     modalEl.style.display = "flex";
 
     const selector = document.getElementById("eventSelector");
@@ -189,7 +189,9 @@ function updateClock() {
   const clock = document.getElementById("clock");
   const now = new Date();
   clock.textContent = [ 
-    now.getHours().toString().padStart(2, "0") + ":" + now.getMinutes().toString().padStart(2, "0") + ":" + now.getSeconds().toString().padStart(2, "0")
+    now.getHours().toString().padStart(2, "0"),
+    now.getMinutes().toString().padStart(2, "0"),
+    now.getSeconds().toString().padStart(2, "0"),
   ].join(":");
 }
 
