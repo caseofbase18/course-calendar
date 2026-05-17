@@ -1,12 +1,13 @@
 :root {
+    /* Modernized Slate & Indigo system */
     --primary: #6b82f6;
-    --primary-light: #dbeafe;
+    --primary-light: #f5f3ff;    /* Soft tinted hue for today/hover states */
     --primary-dark: #1e3a8a;
-    --background: #f9fafb;
-    --success: #dffae5;
-    --success-text: #065f46;
+    --background: #f8fafc;       /* Clean slate background */
+    --success: #dcfce7;
+    --success-text: #166534;
     --error: #fee2e2;
-    --error-text: #b91c1c;
+    --error-text: #991b1b;
 }
 
 * {
@@ -18,122 +19,195 @@
 body {
     font-family: 'Inter', sans-serif;
     background-color: var(--background);
-    color: #333;
-    line-height: 1.6;
+    color: #1e293b; /* Softer dark text for an instantaneous modern upgrade */
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
 }
 
 header {
-    background-color: var(--primary);
+    background: linear-gradient(135deg, #818cf8, var(--primary)); /* Sleek gradient */
     color: #ffffff;
-    padding: 2rem 1rem;
+    padding: 2.5rem 1rem;
     text-align: center;
 }
 
-/* Clock */
+header h1 {
+    font-size: 2.25rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+}
+
+/* Clock - Floating clean pill layout */
 .clock-container {
-    background: var(--primary-light);
-    color: var(--primary-dark);
-    font-size: 2rem;
+    background: #ffffff;
+    color: var(--primary);
+    font-size: 1.5rem;
     font-weight: 700;
     text-align: center;
     font-family: 'Inter', sans-serif;
-    letter-spacing: 2px;
-    border-bottom: 2px solid var(--primary-dark);
-    padding: 1rem;
+    letter-spacing: 0.5px;
+    padding: 0.5rem 1.5rem;
+    border-radius: 30px;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);
+    max-width: fit-content;
+    margin: -1.25rem auto 0 auto; /* Pulls pill halfway up header boundary */
+    position: relative;
+    z-index: 10;
+    border: 1px solid #e2e8f0;
 }
 
 @media (max-width: 768px) {
     .clock-container {
-        font-size: 1.4rem;
-        padding: 0.75rem;
+        font-size: 1.2rem;
+        padding: 0.4rem 1.2rem;
     }
 }
 
 /* Calendar Container */
 .calendar {
-    max-width: 1000px;
-    margin: 2rem auto;
+    max-width: 1100px;
+    margin: 3rem auto;
     background-color: #fff;
-    border-radius: 8px;
-    padding: 1.5rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.05), 0 4px 6px -4px rgb(0 0 0 / 0.05);
 }
 
 .nav-btn-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
 }
 
+.nav-btn-container h2 {
+    font-weight: 800;
+    font-size: 1.5rem;
+    color: #0f172a;
+    letter-spacing: -0.02em;
+}
+
+/* Modernized Minimalist Navigation Buttons */
 .nav-btn {
-    background-color: none;
-    color: var(--primary-dark);
+    background-color: #f1f5f9;
+    color: #475569;
     border: none;
     cursor: pointer;
-    font-size: 1.5rem;
+    width: 40px;  /* Makes the button a perfect circle */
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    font-size: 0; /* Hides original text without changing HTML */
+    position: relative;
+}
+
+.nav-btn:hover {
+    background-color: var(--primary);
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(107, 130, 246, 0.25);
+    transform: translateY(-1px);
+}
+
+.nav-btn:active {
+    transform: translateY(0);
+}
+
+/* Creating the Chevron Left Arrow for "Previous" via pure CSS */
+.nav-btn[onclick*="-1"]::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-left: 2.5px solid currentColor;
+    border-bottom: 2.5px solid currentColor;
+    transform: rotate(45deg);
+    position: absolute;
+    left: 16px;
+}
+
+/* Creating the Chevron Right Arrow for "Next" via pure CSS */
+.nav-btn[onclick*="1"]:not([onclick*="-1"])::after {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-right: 2.5px solid currentColor;
+    border-top: 2.5px solid currentColor;
+    transform: rotate(45deg);
+    position: absolute;
+    right: 16px;
 }
 
 .calendar-grid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    gap: 0.5rem;
+    gap: 0.75rem; /* Separates columns elegantly instead of blocky dark cells */
 }
 
-/* mobile grid */
-@media (max-width: 1024px) {
-    .calendar {
-        display: flex;
-        flex-wrap: nowrap;
-        overflow-x: auto;
-        scroll-snap-type: x mandatory;
-        gap: 0.5rem;
-    }
-
-    .day, .day-name {
-        min-width: 140px;
-        flex-shrink: 0;
-        scroll-snap-align: start;
-    }
-}
-
-.day, .day-name {
+/* Day text labels */
+.day-name {
     text-align: center;
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding-bottom: 0.5rem;
 }
 
+/* Day individual cells */
 .day {
-    background: #ffffff;
-    border: 1px solid #e5e7eb;
-    border-radius: 4px;
-    min-height: 100px;
-    padding: 0.5rem;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    min-height: 120px;
+    padding: 0.75rem;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     position: relative;
     cursor: pointer;
-    transition: background 0.2s ease;
+    transition: all 0.2s ease;
 }
 
 .day:hover {
-    background: var(--primary-light);
+    background: #ffffff;
+    border-color: var(--primary);
+    box-shadow: 0 10px 15px -3px rgba(107, 130, 246, 0.15);
+    transform: translateY(-2px);
 }
 
 .day.today {
-    background: var(--primary-light);
-    border-color: var(--primary-dark);
+    background: #eff6ff; /* Clean light layout variant highlighting today */
+    border-color: var(--primary);
+}
+
+.day.today .date-number {
+    color: var(--primary);
+    background: #dbeafe;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
 }
 
 .date-number {
-    font-weight: 600;
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: #1e293b;
     margin-bottom: 0.5rem;
+    text-align: left; /* Aligns comfortably to the upper-left of cell */
 }
 
+/* Events Inside Day Cells */
 .event {
     background-color: var(--primary);
     color: #fff;
-    padding: 6px 8px;
-    border-radius: 4px;
+    padding: 8px 10px;
+    border-radius: 6px;
     font-size: 13px;
     margin-top: 6px;
     cursor: pointer;
@@ -141,44 +215,76 @@ header {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: transform 0.15s ease;
+    box-shadow: 0 2px 4px rgba(107, 130, 246, 0.2);
+    transition: all 0.2s ease;
 }
 
 .event:hover {
-    transform: scale(1.02);
+    background-color: var(--primary-dark);
+    transform: translateY(-1px);
 }
 
 .event .course {
     font-weight: 700;
     font-size: 13px;
+    letter-spacing: -0.01em;
 }
 
 .event .instructor {
     font-size: 12px;
-    opacity: 0.85;
+    opacity: 0.9;
 }
 
 .event .time {
-    font-size: 12px;
-    margin-top: 3px;
-    color: #f3f3f3;
+    font-size: 11px;
+    margin-top: 4px;
+    background: rgba(255, 255, 255, 0.15);
+    padding: 1px 6px;
+    border-radius: 4px;
+    color: #ffffff;
 }
 
-.event-meta {
-    font-size: 12px;
-    color: #eef;
-    line-height: 1.2;
+/* Action Overlay Button CSS Logic */
+.day-overlay {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    display: none;
+    flex-direction: column;
+    gap: 0.5rem;
+    z-index: 2;
 }
 
-/* alert boxes */
+.day:hover .day-overlay {
+    display: flex;
+}
+
+.overlay-btn {
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    padding: 0.35rem 0.6rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    transition: all 0.15s ease;
+}
+
+.overlay-btn:hover {
+    background: var(--primary-dark);
+}
+
+/* Alert Boxes */
 .alert {
     max-width: 600px;
     padding: 1rem;
-    border-radius: 4px;
-    margin: 1rem auto;
+    border-radius: 6px;
+    margin: 1.5rem auto;
     text-align: center;
-    font-weight: 700;
+    font-weight: 600;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);
 }
 
 .success {
@@ -191,48 +297,73 @@ header {
     color: var(--error-text);
 }
 
-/* modal popup */
+/* Modal Popup View */
 .modal {
     position: fixed;
     inset: 0;
     display: none;
     align-items: center;
     justify-content: center;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(15, 23, 42, 0.3); /* Softer backdrop dim */
+    backdrop-filter: blur(4px); /* Glassmorphism frost effect */
     z-index: 9999;
 }
 
 .modal-content {
     background-color: #fff;
-    padding: 1.5rem;
-    border-radius: 8px;
+    padding: 2rem;
+    border-radius: 16px;
     width: 90%;
-    max-width: 420px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 440px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
 }
 
 .modal-content label {
     display: block;
     font-weight: 600;
-    margin: 1rem 0 0.5rem;
+    font-size: 0.85rem;
+    color: #1e293b;
+    margin: 1.2rem 0 0.4rem;
 }
 
-.modal-content input {
+.modal-content input,
+#eventSelector {
     width: 100%;
-    padding: 0.5rem 0;
-    font-size: 1rem;
-    border: 1px solid #e5e7eb;
-    border-radius: 4px;
+    padding: 0.65rem 0.75rem;
+    font-size: 0.95rem;
+    font-family: inherit;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    color: #1e293b;
+    background-color: #f8fafc;
+    margin-top: 0;
+    transition: all 0.15s ease;
 }
 
+.modal-content input:focus,
+#eventSelector:focus {
+    outline: none;
+    border-color: var(--primary);
+    background-color: #fff;
+    box-shadow: 0 0 0 3px rgba(107, 130, 246, 0.2);
+}
+
+#eventSelector {
+    margin-bottom: 0.5rem;
+}
+
+/* Buttons inside form */
 .modal-content button {
-    margin-top: 1.5rem;
-    background-color: var(--primary);
+    margin-top: 0.75rem;
+    font-family: inherit;
+    padding: 0.75rem 1rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border-radius: 6px;
     border: none;
     cursor: pointer;
-    font-size: 1rem;
     width: 100%;
-    border-radius: .25rem;
+    transition: all 0.15s ease;
 }
 
 .modal-content button[type="submit"] {
@@ -240,58 +371,58 @@ header {
     color: #fff;
 }
 
+.modal-content button[type="submit"]:hover {
+    background-color: var(--primary-dark);
+}
+
 .submit-btn {
-    background-color: crimson;
+    background-color: var(--primary);
     color: #fff;
-    border: none;
-    cursor: pointer;
-    font-size: 1rem;
-    width: 100%;
-    border-radius: .25rem;
 }
 
+/* Explicit targeting for your original Crimson delete button setup */
+.modal-content .submit-btn:has(+ form), 
+form + form .submit-btn,
+button.submit-btn:not([type="submit"]) {
+    background-color: #ef4444; /* Modern crisp crimson-red */
+}
+
+.modal-content .submit-btn:has(+ form):hover,
+form + form .submit-btn:hover {
+    background-color: #b91c1c;
+}
+
+/* Cancel Button (last element styling override) */
 .modal-content button:last-child {
-    background-color: #e5e7eb;
-    color: #333;
+    background-color: #e2e8f0;
+    color: #334155;
+    margin-top: 1rem;
 }
 
-/* dropdown */
-#eventSelector {
-    width: 100%;
-    padding: 0.5rem 0;
-    font-size: 1rem;
-    border: 1px solid #e5e7eb;
-    border-radius: 4px;
-    margin-top: 1rem 0;
+.modal-content button:last-child:hover {
+    background-color: #cbd5e1;
 }
 
-/* overlay buttons css logic*/
-.day-overlay {
-    position: absolute;
-    top: .25rem;
-    right: .25rem;
-    display: none;
-    flex-direction: column;
-    gap: 0.5rem;
-    z-index: 2;
-}
+/* Responsive Mobile Layout Overrides */
+@media (max-width: 1024px) {
+    .calendar {
+        margin: 1rem;
+        padding: 1rem;
+        display: block; /* Overriding your raw flex wrapper so layout breaks elegantly */
+    }
 
-.day:hover .day-overlay {
-    display: flex;
-}
+    .calendar-grid {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        gap: 0.75rem;
+        padding-bottom: 1rem;
+    }
 
-.overlay-btn {
-    background: var(--primary-dark);
-    color: #fff;
-    border: none;
-    padding: 0.25rem 0.5rem;
-    font-size: 0.75rem;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: transform 0.2s ease;
-}
-
-.overlay-btn:hover {
-    background: var(--primary);
-    transform: scale(1.05);
+    .day, .day-name {
+        min-width: 150px;
+        flex-shrink: 0;
+        scroll-snap-align: start;
+    }
 }
