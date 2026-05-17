@@ -412,17 +412,171 @@ form + form .submit-btn:hover {
     }
 
     .calendar-grid {
-        display: flex;
-        flex-wrap: nowrap;
-        overflow-x: auto;
-        scroll-snap-type: x mandatory;
-        gap: 0.75rem;
-        padding-bottom: 1rem;
+        display: grid;
+        grid-template-columns: repeat(7, minmax(80px, 1fr));
+        gap: 0.5rem;
     }
 
     .day, .day-name {
-        min-width: 150px;
-        flex-shrink: 0;
-        scroll-snap-align: start;
+        min-height: 90px;
+        padding: 0.6rem;
+    }
+
+    .day-name {
+        font-size: 0.75rem;
+        padding-bottom: 0.4rem;
+    }
+
+    .date-number {
+        font-size: 0.85rem;
+        margin-bottom: 0.4rem;
+    }
+
+    .event {
+        font-size: 11px;
+        padding: 6px 8px;
+    }
+
+    .overlay-btn {
+        font-size: 0.7rem;
+        padding: 0.3rem 0.5rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .calendar {
+        margin: 0.75rem;
+        padding: 0.75rem;
+    }
+
+    .calendar-grid {
+        display: grid;
+        grid-template-columns: repeat(7, minmax(32px, 1fr));
+        gap: 0.25rem;
+        width: 100%;
+    }
+
+    .day-name,
+    .day {
+        min-height: 64px;
+        padding: 0.4rem;
+    }
+
+    .day-name {
+        font-size: 0.65rem;
+        letter-spacing: 0.04em;
+        padding-bottom: 0.25rem;
+    }
+
+    .date-number {
+        font-size: 0.75rem;
+        margin-bottom: 0.3rem;
+    }
+
+    .event {
+        font-size: 10px;
+        padding: 5px 6px;
+        margin-top: 4px;
+    }
+
+    .event .course,
+    .event .instructor,
+    .event .time {
+        font-size: 10px;
+    }
+
+    .overlay-btn {
+        font-size: 0.65rem;
+        padding: 0.25rem 0.4rem;
+    }
+
+    .day-overlay {
+        position: absolute;
+        bottom: 0.35rem;
+        left: 0.35rem;
+        right: 0.35rem;
+        top: auto;
+        flex-wrap: wrap;
+        gap: 0.25rem;
+    }
+
+    .day:hover {
+        transform: none;
+    }
+
+    .calendar {
+        overflow-x: hidden;
+    }
+
+    .modal-content {
+        width: 95%;
+        padding: 1.25rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .calendar {
+        margin: 0.5rem;
+        padding: 0.5rem;
+    }
+
+    .calendar-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.35rem;
+    }
+
+    .day-name {
+        display: none;
+    }
+
+    .day {
+        min-height: auto;
+        padding: 0.75rem;
+        width: 100%;
+    }
+
+    .date-number {
+        font-size: 0.85rem;
+        margin-bottom: 0.4rem;
+    }
+
+    .event {
+        font-size: 10px;
+        padding: 6px 8px;
+        min-height: auto;
+        line-height: 1.2;
+    }
+
+    .event .course {
+        font-weight: 700;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .event .instructor,
+    .event .time {
+        display: none;
+    }
+
+    .day-overlay {
+        position: static;
+        margin-top: 0.5rem;
+        flex-wrap: wrap;
+        gap: 0.35rem;
+    }
+
+    .day:hover {
+        transform: none;
+    }
+
+    .calendar {
+        overflow-x: hidden;
+    }
+
+    .modal-content {
+        width: 100%;
+        padding: 1rem;
     }
 }
