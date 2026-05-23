@@ -48,7 +48,9 @@ include "calendar.php";
     <!-- Modal for adding/deleting events -->
     <div class="modal" id="eventModal">
         <div class="modal-content">
-
+            <div>
+                <button type="button" id="close-btn" onclick="closeModal()">&#x2715;</button>
+            </div>
             <div id="eventSelectorWrapper">
                 <label for="eventSelector">
                     <strong>Select Event:</strong>

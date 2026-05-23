@@ -86,7 +86,7 @@ http://localhost/calendar-app/course-calendar/index.php
 
 ## Screenshots
 
-![Desktop preview](assets/localhost_calendar-app_course-calendar_index.php.png)
+![Desktop preview](assets/localhost_calendar-app_course-calendar_index.php_success=3.png)
 
 
 

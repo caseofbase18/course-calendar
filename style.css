@@ -414,7 +414,7 @@ header h1 {
 
 .modal-content {
     background-color: #fff;
-    padding: 2rem;
+    padding: 1rem 2rem 2rem;
     border-radius: 16px;
     width: 90%;
     max-width: 440px;
@@ -523,6 +523,7 @@ body.modal-open {
     font-size: 0.9rem;
     cursor: pointer;
     transition: border-color 0.15s ease, background-color 0.15s ease;
+    margin: 0;
 }
 
 .weekday-checkboxes input {
@@ -615,6 +616,13 @@ body.modal-open {
 }
 
 /* Buttons inside form */
+#close-btn {
+    background-color: transparent;
+    position: relative;
+    text-align: right;
+    margin: 0;
+    padding: 0;
+}
 .modal-content button {
     margin-top: 0.75rem;
     font-family: inherit;
