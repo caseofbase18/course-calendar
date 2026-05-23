@@ -35,6 +35,11 @@ include "calendar.php";
             <h2 id="monthYear" style="margin: 0"></h2>
             <button class="nav-btn" onclick="changeMonth(1)">Next</button>
         </div>
+        <div class="legend-panel">
+            <span class="legend-label">Courses:</span>
+            <div id="courseLegend" class="course-legend"></div>
+            <button type="button" id="clearCourseFilters" class="legend-clear-btn" onclick="clearCourseFilters()">Show all</button>
+        </div>
         <div class="calendar-grid" id="calendar">
             <!-- Days will be populated by JavaScript -->
         </div>
@@ -48,7 +53,7 @@ include "calendar.php";
                 <label for="eventSelector">
                     <strong>Select Event:</strong>
                 </label>
-                <select name="" id="eventSelector" onchange="handleEventSelection()">
+                <select name="" id="eventSelector" onchange="handleEventSelection(this)">
                     <option disabled selected>Choose Event...</option>
                 </select>
             </div>
@@ -71,11 +76,53 @@ include "calendar.php";
                 <label for="endDate">End Date:</label>
                 <input type="date" name="end_date" id="endDate" required>
 
-                <label for="startTime">Start Time:</label>
-                <input type="time" name="start_time" id="startTime" required>
+                <label>Course Days:</label>
+                <div class="weekday-checkboxes">
+                    <label><input type="checkbox" name="days[]" value="Sun"> Sun</label>
+                    <label><input type="checkbox" name="days[]" value="Mon"> Mon</label>
+                    <label><input type="checkbox" name="days[]" value="Tue"> Tue</label>
+                    <label><input type="checkbox" name="days[]" value="Wed"> Wed</label>
+                    <label><input type="checkbox" name="days[]" value="Thu"> Thu</label>
+                    <label><input type="checkbox" name="days[]" value="Fri"> Fri</label>
+                    <label><input type="checkbox" name="days[]" value="Sat"> Sat</label>
+                </div>
 
-                <label for="endTime">End Time:</label>
-                <input type="time" name="end_time" id="endTime" required>
+                <div class="course-color-row">
+                    <label for="courseColor" class="course-color-label">Course Color:</label>
+                    <input type="color" name="course_color" id="courseColor" value="#6B82F6">
+                </div>
+
+                <label for="startTimePicker">Start Time:</label>
+                <div class="time-picker-wrapper" id="startTimePicker">
+                    <button type="button" class="time-picker-button" onclick="toggleTimePicker('start')">
+                        <span id="startTimeLabel">09:00 AM</span>
+                    </button>
+                    <div class="time-picker-panel" id="startTimePanel">
+                        <select id="startHour" onchange="updateTimeValue('start')"></select>
+                        <select id="startMinute" onchange="updateTimeValue('start')"></select>
+                        <select id="startAmPm" onchange="selectAmPm('start')">
+                            <option value="AM">AM</option>
+                            <option value="PM">PM</option>
+                        </select>
+                    </div>
+                </div>
+                <input type="hidden" name="start_time" id="startTime" required>
+
+                <label for="endTimePicker">End Time:</label>
+                <div class="time-picker-wrapper" id="endTimePicker">
+                    <button type="button" class="time-picker-button" onclick="toggleTimePicker('end')">
+                        <span id="endTimeLabel">10:00 AM</span>
+                    </button>
+                    <div class="time-picker-panel" id="endTimePanel">
+                        <select id="endHour" onchange="updateTimeValue('end')"></select>
+                        <select id="endMinute" onchange="updateTimeValue('end')"></select>
+                        <select id="endAmPm" onchange="selectAmPm('end')">
+                            <option value="AM">AM</option>
+                            <option value="PM">PM</option>
+                        </select>
+                    </div>
+                </div>
+                <input type="hidden" name="end_time" id="endTime" required>
 
                 <button type="submit" class="submit-btn">Save Event</button>
             </form>

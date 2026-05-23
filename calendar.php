@@ -15,11 +15,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && ($_POST["action"] ?? "") === "add")
     $end = $_POST["end_date"] ?? "";
     $startTime = $_POST["start_time"] ?? "";
     $endTime = $_POST["end_time"] ?? "";
+    $days = $_POST["days"] ?? [];
+    $selectedDays = implode(',', array_map('trim', $days));
+    $color = trim($_POST["course_color"] ?? "#6B82F6");
 
-    if($course && $instructor && $start && $end && $startTime && $endTime) {
-        $stmt = $conn->prepare("INSERT INTO appointments (course_name, instructor_name, start_date, end_date, start_time, end_time) VALUES (?, ?, ?, ?, ?, ?)");
+    if($course && $instructor && $start && $end && $startTime && $endTime && !empty($days)) {
+        $stmt = $conn->prepare("INSERT INTO appointments (course_name, instructor_name, start_date, end_date, start_time, end_time, selected_days, course_color) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 
-        $stmt->bind_param("ssssss", $course, $instructor, $start, $end, $startTime, $endTime);
+        $stmt->bind_param("ssssssss", $course, $instructor, $start, $end, $startTime, $endTime, $selectedDays, $color);
 
         $stmt->execute();
 
@@ -27,7 +30,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && ($_POST["action"] ?? "") === "add")
 
         header("Location: " . $_SERVER["PHP_SELF"] . "?success=1");
         exit;
-    
     } else {
         header("Location: " . $_SERVER["PHP_SELF"] . "?error=1");
         exit;
@@ -43,10 +45,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && ($_POST["action"] ?? "") === "edit"
     $end = $_POST["end_date"] ?? "";
     $startTime = $_POST["start_time"] ?? "";
     $endTime = $_POST["end_time"] ?? "";
+    $days = $_POST["days"] ?? [];
+    $selectedDays = implode(',', array_map('trim', $days));
+    $color = trim($_POST["course_color"] ?? "#6B82F6");
 
-if($id && $course && $instructor && $start && $end && $startTime && $endTime) {
-        $stmt = $conn->prepare("UPDATE appointments SET course_name = ?, instructor_name = ?, start_date = ?, end_date = ?, start_time = ?, end_time = ? WHERE id = ?");
-        $stmt->bind_param("ssssssii", $course, $instructor, $start, $end, $startTime, $endTime, $id);
+    if($id && $course && $instructor && $start && $end && $startTime && $endTime && !empty($days)) {
+        $stmt = $conn->prepare("UPDATE appointments SET course_name = ?, instructor_name = ?, start_date = ?, end_date = ?, start_time = ?, end_time = ?, selected_days = ?, course_color = ? WHERE id = ?");
+        $stmt->bind_param("ssssssssi", $course, $instructor, $start, $end, $startTime, $endTime, $selectedDays, $color, $id);
         $stmt->execute();
         $stmt->close();
 
@@ -101,16 +106,32 @@ if ($result && $result->num_rows > 0) {
         $start = new DateTime($row["start_date"]);
         $end = new DateTime($row["end_date"]);
 
+        $selectedDays = array_filter(array_map('trim', explode(',', $row['selected_days'] ?? '')));
+        $weekdayNames = [
+            0 => 'Sun',
+            1 => 'Mon',
+            2 => 'Tue',
+            3 => 'Wed',
+            4 => 'Thu',
+            5 => 'Fri',
+            6 => 'Sat',
+        ];
+
         while ($start <= $end) {
-            $eventsFromDB[] = [
-                "id" => $row["id"],
-                "title" => $row["course_name"] . " - " . $row["instructor_name"],
-                "date" => $start->format("Y-m-d"),
-                "start_date" => $row["start_date"],
-                "end_date" => $row["end_date"],
-                "start_time" => $row["start_time"],
-                "end_time" => $row["end_time"]
-            ];
+            $dayName = $weekdayNames[intval($start->format("w"))];
+            if (empty($selectedDays) || in_array($dayName, $selectedDays, true)) {
+                $eventsFromDB[] = [
+                    "id" => $row["id"],
+                    "title" => $row["course_name"] . " - " . $row["instructor_name"],
+                    "date" => $start->format("Y-m-d"),
+                    "start_date" => $row["start_date"],
+                    "end_date" => $row["end_date"],
+                    "start_time" => $row["start_time"],
+                    "end_time" => $row["end_time"],
+                    "selected_days" => implode(',', $selectedDays),
+                    "course_color" => $row["course_color"] ?? '#6B82F6'
+                ];
+            }
             $start->modify("+1 day");
         }
     }

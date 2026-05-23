@@ -6,6 +6,7 @@ A simple PHP and MySQL course calendar application that lets students track clas
 
 - Display a monthly calendar with current day highlighting
 - Add course events with course name, instructor, date range, and time range
+- Filter visible course events using a color legend
 - Edit or delete existing course events
 - Persist events in a MySQL database
 - Responsive, modern UI with day hover controls and a live clock
@@ -40,7 +41,9 @@ CREATE TABLE appointments (
   start_date DATE NOT NULL,
   end_date DATE NOT NULL,
   start_time TIME NOT NULL,
-  end_time TIME NOT NULL
+  end_time TIME NOT NULL,
+  selected_days VARCHAR(255) NOT NULL,
+  course_color VARCHAR(7) NOT NULL DEFAULT '#6B82F6'
 );
 ```
 
@@ -78,3 +81,14 @@ http://localhost/calendar-app/course-calendar/index.php
 - If the calendar does not load, verify your PHP server is running.
 - If events are not saved, confirm the database connection settings in `connection.php` and the table schema.
 - Use browser developer tools to inspect console errors from `calendar.js`.
+
+---
+
+## Screenshots
+
+![Desktop preview](assets/localhost_calendar-app_course-calendar_index.php.png)
+
+![Mobile preview](assets/localhost_calendar-app_course-calendar_index.php.png)
+
+
+
