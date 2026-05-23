@@ -88,7 +88,5 @@ http://localhost/calendar-app/course-calendar/index.php
 
 ![Desktop preview](assets/localhost_calendar-app_course-calendar_index.php.png)
 
-![Mobile preview](assets/localhost_calendar-app_course-calendar_index.php.png)
-
 
 
